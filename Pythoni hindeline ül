@@ -1,0 +1,87 @@
+print("Aastaaeg")  # Parandatud: ülakoma ' asendatud jutumärgiga "
+kuu = int(input("Sisesta kuu number (1-12) => "))
+if kuu < 1 or kuu > 12:  # Parandatud: 'and' asendatud 'or'-iga
+    print("Vigane kuu")
+elif kuu == 12 or kuu <= 2:  # Parandatud: '=' asendatud võrdlusmärgiga '=='
+    print("Talv")
+elif 3 <= kuu <= 5:  # Parandatud: 'else if' asendatud 'elif'-iga
+    print("Kevad")
+elif 6 <= kuu <= 8:  # Parandatud: lisatud koolon :
+    print("Suvi")  # Parandatud: lisatud taane 4 tühikut
+else:
+    print("Sügis")
+print()
+
+print("Kiiruse kontroll")
+lubatud = int(input("Sisesta lubatud kiirus (km/h) => "))  # Parandatud: lisatud lõpusulg ')'
+kiirus = int(input("Sisesta tegelik kiirus (km/h) => "))  # Parandatud: lisatud int()
+yletus = kiirus - lubatud
+if yletus <= 0:  # Parandatud: '=<' asendatud kujuga '<=' 
+    print("Kiirust ei ületatud")
+elif yletus <= 20:  # Parandatud: tingimuse vahemik muudetud, et jõuaks ka järgmiste harudeni
+    print("Hoiatus")
+elif yletus <= 40:  # Parandatud: vahemik 21-40 annab trahvi
+    print("Trahv")
+else:  # Parandatud: üle 40 ületamise puhul võetakse juhiluba ära
+    print("Juhiluba võetakse ära")
+print()
+
+print("Taksosõit")
+km = float(input("Sisesta sõidu pikkus (km) => "))
+oo = input("Kas sõit on öösel (jah/ei)? => ")
+hind = 3 + km * 0.8  # Parandatud: teine '+' asendatud korrutusmärgiga '*'
+if oo == "jah" or oo == "JAH":  # Parandatud: 'and' asendatud 'or'-iga ja lisatud koolon ':'
+    hind = hind * 1.2
+print("Sõidu hind:", round(hind, 2), "€")  # Parandatud: lisatud lõpusulg ')'
+
+print("Vali programm:")
+print("1 - Aastaaeg")
+print("2 - Kiiruse kontroll")
+print("3 - Taksosõit")
+valik = input("Sisesta valik (1-3) => ")
+print()
+
+if valik == "1":
+    print("Aastaaeg")
+    kuu = int(input("Sisesta kuu number (1-12) => "))
+    if kuu < 1 or kuu > 12:
+        print("Vigane kuu")
+    elif kuu == 12 or kuu <= 2:
+        print("Talv")
+    elif 3 <= kuu <= 5:
+        print("Kevad")
+    elif 6 <= kuu <= 8:
+        print("Suvi")
+    else:
+        print("Sügis")
+
+elif valik == "2":
+    print("Kiiruse kontroll")
+    lubatud = int(input("Sisesta lubatud kiirus (km/h) => "))
+    kiirus = int(input("Sisesta tegelik kiirus (km/h) => "))
+    if lubatud < 0 or kiirus < 0:
+        print("Viga: kiirus ei tohi olla negatiivne")
+    else:
+        yletus = kiirus - lubatud
+        if yletus <= 0:
+            print("Kiirust ei ületatud")
+        elif yletus <= 20:
+            print("Hoiatus")
+        elif yletus <= 40:
+            print("Trahv")
+        else:
+            print("Juhiluba võetakse ära")
+
+elif valik == "3":
+    print("Taksosõit")
+    km = float(input("Sisesta sõidu pikkus (km) => "))
+    oo = input("Kas sõit on öösel (jah/ei)? => ")
+    hind = 3 + km * 0.8
+    if oo.lower() == "jah":
+        hind = hind * 1.2
+    if km > 50:
+        hind = hind * 0.9
+    print("Sõidu hind:", round(hind, 2), "€")
+
+else:
+    print("Vigane valik")
