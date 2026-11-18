@@ -1,0 +1,264 @@
+import random
+
+# Tooted, mille kohta kasutajalt küsitakse (vähemalt 5 toodet)
+tooted = ["piim", "sai", "leib", "juust", "õunad", "kohv"]
+
+# Loome igale tootele juhusliku hinna vahemikus 0.50 kuni 3.00 €
+hinnad = {}
+for toode in tooted:
+    hinnad[toode] = round(random.uniform(0.5, 3), 2)
+
+ostukorv = []
+
+print("Tere tulemast poodi! Vali sobivad tooted.\n")
+
+# Küsime iga toote kohta eraldi
+for toode in tooted:
+    hind = hinnad[toode]
+    vastus = input(f"Kas soovid osta toodet '{toode}' (hind {hind:.2f} €)? (jah/ei): ").strip().lower()
+    
+    if vastus == "jah":
+        while True:
+            kogus_str = input(f"Mitu tükki/ühikut toodet '{toode}' soovid?: ").strip()
+            # Kontrollime, et sisestatud väärtus on täisarv ja suurem kui 0
+            if kogus_str.isdigit() and int(kogus_str) > 0:
+                kogus = int(kogus_str)
+                summa = round(kogus * hind, 2)
+                ostukorv.append({
+                    "nimi": toode,
+                    "kogus": kogus,
+                    "hind": hind,
+                    "summa": summa
+                })
+                break
+            else:
+                print("Viga! Palun sisesta korrektne positiivne täisarv.")
+
+# Kuvame tšeki
+print("\n" + "=" * 45)
+print("                   OSTUTŠEKK")
+print("=" * 45)
+
+if not ostukorv:
+    print("Ostukorv on tühi. Aitäh külastamast!")
+else:
+    print(f"{'Toode':<12} {'Kogus':<8} {'Hind':<10} {'Summa':<10}")
+    print("-" * 45)
+    
+    kogusumma = 0
+    for rida in ostukorv:
+        print(f"{rida['nimi'].capitalize():<12} {rida['kogus']:<8} {rida['hind']:<9.2f}€ {rida['summa']:<9.2f}€")
+        kogusumma += rida["summa"]
+        
+    print("-" * 45)
+    print(f"{'KOKKU:':<32} {kogusumma:.2f} €")
+print("=" * 45)
+10) Matemaatika
+import matplotlib.patches as patches
+import matplotlib.pyplot as plt
+
+
+def joonista_plokkskeem(failinimi="plokkskeem.png"):
+    fig, ax = plt.subplots(figsize=(10, 14))
+    ax.set_xlim(0, 10)
+    ax.set_ylim(0, 16)
+    ax.axis("off")
+
+    def kasti_stiil(x, y, w, h, tekst, kuju="ristkylik", varv="#E3F2FD"):
+        if kuju == "ovaal":
+            patch = patches.FancyBboxPatch(
+                (x - w / 2, y - h / 2),
+                w,
+                h,
+                boxstyle="round,pad=0.1,rounding_size=0.4",
+                facecolor=varv,
+                edgecolor="black",
+                linewidth=1.5,
+            )
+        elif kuju == "roopkylik":
+            points = [
+                [x - w / 2 + 0.2, y + h / 2],
+                [x + w / 2 + 0.2, y + h / 2],
+                [x + w / 2 - 0.2, y - h / 2],
+                [x - w / 2 - 0.2, y - h / 2],
+            ]
+            patch = patches.Polygon(
+                points,
+                closed=True,
+                facecolor=varv,
+                edgecolor="black",
+                linewidth=1.5,
+            )
+        elif kuju == "romb":
+            points = [
+                [x, y + h / 2],
+                [x + w / 2, y],
+                [x, y - h / 2],
+                [x - w / 2, y],
+            ]
+            patch = patches.Polygon(
+                points,
+                closed=True,
+                facecolor=varv,
+                edgecolor="black",
+                linewidth=1.5,
+            )
+        else:  # ristkülik
+            patch = patches.Rectangle(
+                (x - w / 2, y - h / 2),
+                w,
+                h,
+                facecolor=varv,
+                edgecolor="black",
+                linewidth=1.5,
+            )
+
+        ax.add_patch(patch)
+        ax.text(
+            x,
+            y,
+            tekst,
+            ha="center",
+            va="center",
+            fontsize=9,
+            fontweight="bold",
+        )
+
+    def nool(x1, y1, x2, y2, silt="", nihe=(0, 0)):
+        ax.annotate(
+            "",
+            xy=(x2, y2),
+            xytext=(x1, y1),
+            arrowprops=dict(arrowstyle="->", lw=1.5, color="black"),
+        )
+        if silt:
+            ax.text(
+                (x1 + x2) / 2 + nihe[0],
+                (y1 + y2) / 2 + nihe[1],
+                silt,
+                fontsize=8,
+                color="darkred",
+                fontweight="bold",
+            )
+
+    # Kujundid
+    kasti_stiil(5, 15.2, 2.2, 0.7, "ALGUS", "ovaal", "#C8E6C9")
+    kasti_stiil(
+        5,
+        13.8,
+        4.2,
+        0.9,
+        "Sisesta arv1, arv2\nja tehtemärk (+, -, *, /)",
+        "roopkylik",
+        "#FFF9C4",
+    )
+
+    # Tingimused
+    kasti_stiil(5, 12.0, 2.8, 1.1, "tehe == '+'?", "romb", "#FFE0B2")
+    kasti_stiil(8.2, 12.0, 2.4, 0.8, "tulemus = arv1 + arv2", "ristkylik")
+
+    kasti_stiil(5, 10.2, 2.8, 1.1, "tehe == '-'?", "romb", "#FFE0B2")
+    kasti_stiil(8.2, 10.2, 2.4, 0.8, "tulemus = arv1 - arv2", "ristkylik")
+
+    kasti_stiil(5, 8.4, 2.8, 1.1, "tehe == '*'?", "romb", "#FFE0B2")
+    kasti_stiil(8.2, 8.4, 2.4, 0.8, "tulemus = arv1 * arv2", "ristkylik")
+
+    kasti_stiil(5, 6.6, 2.8, 1.1, "tehe == '/'?", "romb", "#FFE0B2")
+    kasti_stiil(
+        2.0, 6.6, 2.8, 0.8, "Väljasta:\nTundmatu tehtemärk!", "roopkylik", "#FFCDD2"
+    )
+
+    # Nulliga jagamise kontroll
+    kasti_stiil(5, 4.6, 2.8, 1.1, "arv2 == 0?", "romb", "#FFE0B2")
+    kasti_stiil(
+        2.0,
+        4.6,
+        2.8,
+        0.8,
+        "Väljasta:\nNulliga jagada ei saa!",
+        "roopkylik",
+        "#FFCDD2",
+    )
+    kasti_stiil(8.2, 4.6, 2.4, 0.8, "tulemus = arv1 / arv2", "ristkylik")
+
+    # Väljund ja lõpp
+    kasti_stiil(5, 2.5, 3.2, 0.8, "Väljasta tulemus", "roopkylik", "#FFF9C4")
+    kasti_stiil(5, 1.0, 2.2, 0.7, "LÕPP", "ovaal", "#C8E6C9")
+
+    # Nooled
+    nool(5, 14.85, 5, 14.25)
+    nool(5, 13.35, 5, 12.55)
+
+    # + haru
+    nool(6.4, 12.0, 7.0, 12.0, "Jah", (0, 0.15))
+    nool(5, 11.45, 5, 10.75, "Ei", (0.15, 0))
+
+    # - haru
+    nool(6.4, 10.2, 7.0, 10.2, "Jah", (0, 0.15))
+    nool(5, 9.65, 5, 8.95, "Ei", (0.15, 0))
+
+    # * haru
+    nool(6.4, 8.4, 7.0, 8.4, "Jah", (0, 0.15))
+    nool(5, 7.85, 5, 7.15, "Ei", (0.15, 0))
+
+    # / haru
+    nool(3.6, 6.6, 3.4, 6.6, "Ei", (-0.1, 0.15))
+    nool(5, 6.05, 5, 5.15, "Jah", (0.15, 0))
+
+    # arv2 == 0 haru
+    nool(3.6, 4.6, 3.4, 4.6, "Jah", (-0.1, 0.15))
+    nool(6.4, 4.6, 7.0, 4.6, "Ei", (0, 0.15))
+
+    # Ühendusjooned tulemuseni ja lõppu
+    ax.plot([9.4, 9.7, 9.7, 6.6], [12.0, 12.0, 2.5, 2.5], color="black", lw=1.5)
+    ax.plot([9.4, 9.7], [10.2, 10.2], color="black", lw=1.5)
+    ax.plot([9.4, 9.7], [8.4, 8.4], color="black", lw=1.5)
+    ax.plot([9.4, 9.7], [4.6, 4.6], color="black", lw=1.5)
+    nool(6.8, 2.5, 6.6, 2.5)  # noolepea tulemuse kasti külge
+
+    # Veateadete ühendus lõppu
+    ax.plot([0.6, 0.3, 0.3, 3.9], [6.6, 6.6, 1.0, 1.0], color="black", lw=1.5)
+    ax.plot([0.6, 0.3], [4.6, 4.6], color="black", lw=1.5)
+    nool(3.7, 1.0, 3.9, 1.0)  # noolepea lõpu kasti külge
+
+    nool(5, 2.1, 5, 1.35)
+
+    plt.tight_layout()
+    plt.savefig(failinimi, dpi=300)
+    plt.close()
+    print(f"Plokkskeem on salvestatud faili '{failinimi}'.")
+
+
+def kalkulaator():
+    # Küsime kasutajalt kaks arvu
+    try:
+        arv1 = float(input("Sisesta esimene arv: "))
+        arv2 = float(input("Sisesta teine arv: "))
+    except ValueError:
+        print("Viga: Palun sisesta korrektsed numbrid!")
+        return
+
+    # Küsime tehtemärki
+    tehe = input("Vali tehe (+, -, *, /): ").strip()
+
+    # Teostame arvutuse vastavalt tehtemärgile
+    if tehe == "+":
+        print(f"Tulemus: {arv1} + {arv2} = {arv1 + arv2}")
+    elif tehe == "-":
+        print(f"Tulemus: {arv1} - {arv2} = {arv1 - arv2}")
+    elif tehe == "*":
+        print(f"Tulemus: {arv1} * {arv2} = {arv1 * arv2}")
+    elif tehe == "/":
+        if arv2 == 0:
+            print("Viga: Nulliga jagamine ei ole lubatud!")
+        else:
+            print(f"Tulemus: {arv1} / {arv2} = {arv1 / arv2}")
+    else:
+        print(f"Viga: Tundmatu tehtemärk '{tehe}'. Kasuta ainult +, -, * või /.")
+
+
+if __name__ == "__main__":
+    kalkulaator()
+    joonista_plokkskeem()
+
+
