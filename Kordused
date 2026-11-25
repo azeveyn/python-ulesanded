@@ -101,3 +101,180 @@ try:
     print(f"nullid arv: {nullid}")
 except ValueError:
     print("Palun sisestage täisarv. ")
+#6
+N = int(input("Mitu arvu sisestad? "))
+
+# 1. FOR tsükkel
+pos = neg = nullid = 0
+for i in range(N):
+    arv = float(input(f"Sisesta {i+1}. arv: "))
+    if arv > 0:
+        pos += 1
+    elif arv < 0:
+        neg += 1
+    else:
+        nullid += 1
+print(f"FOR: Positiivseid: {pos}, Negatiivseid: {neg}, Nulle: {nullid}")
+
+# 2. WHILE tsükkel
+pos = neg = nullid = i = 0
+while i < N:
+    arv = float(input(f"Sisesta {i+1}. arv: "))
+    if arv > 0:
+        pos += 1
+    elif arv < 0:
+        neg += 1
+    else:
+        nullid += 1
+    i += 1
+print(f"WHILE: Positiivseid: {pos}, Negatiivseid: {neg}, Nulle: {nullid}")
+
+# 3. WHILE True tsükkel
+pos = neg = nullid = i = 0
+while True:
+    if i >= N:
+        break
+    arv = float(input(f"Sisesta {i+1}. arv: "))
+    if arv > 0:
+        pos += 1
+    elif arv < 0:
+        neg += 1
+    else:
+        nullid += 1
+    i += 1
+print(f"WHILE True: Positiivseid: {pos}, Negatiivseid: {neg}, Nulle: {nullid}")
+#7
+A = int(input("Sisesta algus A: "))
+B = int(input("Sisesta lõpp B: "))
+K = int(input("Sisesta jagaja K: "))
+
+# 1. FOR tsükkel
+print("FOR:", end=" ")
+for i in range(A, B + 1):
+    if i % K == 0:
+        print(i, end=" ")
+print()
+
+# 2. WHILE tsükkel
+print("WHILE:", end=" ")
+i = A
+while i <= B:
+    if i % K == 0:
+        print(i, end=" ")
+    i += 1
+print()
+
+# 3. WHILE True tsükkel
+print("WHILE True:", end=" ")
+i = A
+while True:
+    if i > B:
+        break
+    if i % K == 0:
+        print(i, end=" ")
+    i += 1
+print()
+
+5 iseseisvat ülesannet (8,9,17,18,22)
+
+#8
+# 1. FOR tsükkel
+print("--- FOR ---")
+for toll in range(1, 21):
+    print(f"{toll} toll = {toll * 2.5} cm")
+
+# 2. WHILE tsükkel
+print("--- WHILE ---")
+toll = 1
+while toll <= 20:
+    print(f"{toll} toll = {toll * 2.5} cm")
+    toll += 1
+
+# 3. WHILE True tsükkel
+print("--- WHILE True ---")
+toll = 1
+while True:
+    if toll > 20:
+        break
+    print(f"{toll} toll = {toll * 2.5} cm")
+    toll += 1
+
+#9
+S = float(input("Sisesta algsumma S: "))
+N = int(input("Sisesta aastate arv N: "))
+
+# 1. FOR tsükkel
+summa = S
+for _ in range(N):
+    summa *= 1.03
+print(f"FOR: Summa {N} aasta järel on {round(summa, 2)} eurot")
+
+# 2. WHILE tsükkel
+summa = S
+aasta = 0
+while aasta < N:
+    summa *= 1.03
+    aasta += 1
+print(f"WHILE: Summa {N} aasta järel on {round(summa, 2)} eurot")
+
+# 3. WHILE True tsükkel
+summa = S
+aasta = 0
+while True:
+    if aasta >= N:
+        break
+    summa *= 1.03
+    aasta += 1
+print(f"WHILE True: Summa {N} aasta järel on {round(summa, 2)} eurot")
+
+#17
+arv = int(input("Sisesta arv korrutustabeli jaoks: "))
+
+# 1. FOR tsükkel
+print("--- FOR ---")
+for i in range(1, 10):
+    print(f"{arv}*{i}={arv * i}")
+
+# 2. WHILE tsükkel
+print("--- WHILE ---")
+i = 1
+while i <= 9:
+    print(f"{arv}*{i}={arv * i}")
+    i += 1
+
+# 3. WHILE True tsükkel
+print("--- WHILE True ---")
+i = 1
+while True:
+    if i > 9:
+        break
+    print(f"{arv}*{i}={arv * i}")
+    i += 1
+
+#22
+# 1. FOR tsükkel
+summa = 0
+for i in range(100, 201):
+    if i % 17 == 0:
+        summa += i
+print("FOR summa:", summa)
+
+# 2. WHILE tsükkel
+summa = 0
+i = 100
+while i <= 200:
+    if i % 17 == 0:
+        summa += i
+    i += 1
+print("WHILE summa:", summa)
+
+# 3. WHILE True tsükkel
+summa = 0
+i = 100
+while True:
+    if i > 200:
+        break
+    if i % 17 == 0:
+        summa += i
+    i += 1
+print("WHILE True summa:", summa)
